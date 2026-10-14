@@ -1,0 +1,77 @@
+{
+  "name": "even_odd",
+  "note": "the chart every demo starts with: read one number, say even or odd",
+  "stdin": "7\n",
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "start",
+      "text": "Start",
+      "x": 260,
+      "y": 40
+    },
+    {
+      "id": "n2",
+      "type": "input",
+      "text": "Read n",
+      "x": 260,
+      "y": 130
+    },
+    {
+      "id": "n3",
+      "type": "decision",
+      "text": "n % 2 == 0?",
+      "x": 260,
+      "y": 235
+    },
+    {
+      "id": "n4",
+      "type": "output",
+      "text": "Print \"Even\"",
+      "x": 120,
+      "y": 345
+    },
+    {
+      "id": "n5",
+      "type": "output",
+      "text": "Print \"Odd\"",
+      "x": 400,
+      "y": 345
+    },
+    {
+      "id": "n6",
+      "type": "end",
+      "text": "End",
+      "x": 260,
+      "y": 440
+    }
+  ],
+  "edges": [
+    {
+      "from": "n1",
+      "to": "n2"
+    },
+    {
+      "from": "n2",
+      "to": "n3"
+    },
+    {
+      "from": "n3",
+      "to": "n4",
+      "label": "yes"
+    },
+    {
+      "from": "n3",
+      "to": "n5",
+      "label": "no"
+    },
+    {
+      "from": "n4",
+      "to": "n6"
+    },
+    {
+      "from": "n5",
+      "to": "n6"
+    }
+  ]
+}

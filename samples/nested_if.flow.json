@@ -1,0 +1,105 @@
+{
+  "name": "nested_if",
+  "note": "an if inside an if: positive, negative or zero",
+  "stdin": "0\n",
+  "nodes": [
+    {
+      "id": "z1",
+      "type": "start",
+      "text": "Start",
+      "x": 260,
+      "y": 40
+    },
+    {
+      "id": "z2",
+      "type": "input",
+      "text": "Read n",
+      "x": 260,
+      "y": 130
+    },
+    {
+      "id": "z3",
+      "type": "decision",
+      "text": "n > 0?",
+      "x": 260,
+      "y": 235
+    },
+    {
+      "id": "z4",
+      "type": "output",
+      "text": "Print \"positive\"",
+      "x": 110,
+      "y": 345
+    },
+    {
+      "id": "z5",
+      "type": "decision",
+      "text": "n < 0?",
+      "x": 410,
+      "y": 345
+    },
+    {
+      "id": "z6",
+      "type": "output",
+      "text": "Print \"negative\"",
+      "x": 300,
+      "y": 455
+    },
+    {
+      "id": "z7",
+      "type": "output",
+      "text": "Print \"zero\"",
+      "x": 520,
+      "y": 455
+    },
+    {
+      "id": "z8",
+      "type": "end",
+      "text": "End",
+      "x": 310,
+      "y": 560
+    }
+  ],
+  "edges": [
+    {
+      "from": "z1",
+      "to": "z2"
+    },
+    {
+      "from": "z2",
+      "to": "z3"
+    },
+    {
+      "from": "z3",
+      "to": "z4",
+      "label": "yes"
+    },
+    {
+      "from": "z3",
+      "to": "z5",
+      "label": "no"
+    },
+    {
+      "from": "z4",
+      "to": "z8"
+    },
+    {
+      "from": "z5",
+      "to": "z6",
+      "label": "yes"
+    },
+    {
+      "from": "z5",
+      "to": "z7",
+      "label": "no"
+    },
+    {
+      "from": "z6",
+      "to": "z8"
+    },
+    {
+      "from": "z7",
+      "to": "z8"
+    }
+  ]
+}

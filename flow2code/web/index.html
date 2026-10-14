@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow2Code — draw a flowchart, run the Python it describes</title>
+<meta name="description" content="A flowchart editor that validates the chart, generates Python from it and runs it. Backend: Flask + the flow2code package.">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="frame">
+
+  <header class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 28 28" class="mark" aria-hidden="true">
+        <path d="M8 3h12v5H8z" /><path d="M3 12h9v5H3z" /><path d="M16 12h9v5h-9z" />
+        <path d="M10.5 8v4M17.5 14.5h-4" stroke="#16181d" stroke-width="1.4" fill="none"/>
+      </svg>
+      <span class="name">Flow2Code</span>
+      <span class="tag">flowchart → Python</span>
+    </div>
+
+    <label class="title">
+      <span class="k">chart</span>
+      <input id="chartName" value="untitled" spellcheck="false" aria-label="chart name">
+    </label>
+
+    <div class="tools">
+      <button class="btn" data-act="new">New</button>
+      <button class="btn" data-act="open">Open…</button>
+      <button class="btn" data-act="save">Save</button>
+      <button class="btn" data-act="examples">Examples</button>
+      <button class="btn primary" data-act="upload">Upload a flowchart photo</button>
+      <input type="file" id="fileOpen" accept=".json,application/json" hidden>
+      <input type="file" id="fileImage" accept="image/*" hidden>
+    </div>
+
+    <div class="state" id="state">
+      <span class="pill" id="pill">empty chart</span>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- the shapes a flowchart is allowed to use ------------------------------ -->
+    <aside class="rail" id="rail">
+      <div class="rail-h">Shapes</div>
+      <div id="palette"></div>
+      <div class="rail-h">Drawing</div>
+      <div class="rail-group" id="extras"></div>
+      <p class="rail-tip">
+        Drag a shape onto the canvas. Click a shape and pull from a <b>blue dot</b> to draw
+        an arrow. Double-click any shape to type in it. <kbd>Del</kbd> removes,
+        <kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes, <kbd>Ctrl</kbd>+<kbd>scroll</kbd> zooms.
+      </p>
+    </aside>
+
+    <!-- the canvas ------------------------------------------------------------- -->
+    <main class="stage" id="stage">
+      <div class="hint" id="hint">Pick a shape on the left, or open an example.</div>
+      <div class="ctools">
+        <button class="ic" data-act="undo" title="Undo (Ctrl+Z)">↶</button>
+        <button class="ic" data-act="redo" title="Redo (Ctrl+Shift+Z)">↷</button>
+        <span class="vr"></span>
+        <button class="ic" data-act="zoomOut" title="Zoom out">−</button>
+        <span class="z" id="zoom">100%</span>
+        <button class="ic" data-act="zoomIn" title="Zoom in">+</button>
+        <button class="ic" data-act="fit" title="Fit the chart on screen">⤢</button>
+        <span class="vr"></span>
+        <button class="ic wide" data-act="snap" id="snapBtn" aria-pressed="true">Snap</button>
+        <button class="ic wide" data-act="auto" title="Straighten the layout">Tidy</button>
+      </div>
+      <div class="drop" id="drop" hidden>drop a photo of a hand-drawn chart to import it</div>
+    </main>
+
+    <!-- code, output, problems ------------------------------------------------- -->
+    <aside class="panel">
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-tab="code" role="tab">Python</button>
+        <button class="tab" data-tab="run" role="tab">Run</button>
+        <button class="tab" data-tab="problems" role="tab">Problems<span class="cnt" id="pcnt"></span></button>
+        <button class="tab" data-tab="pic" role="tab">Picture</button>
+      </div>
+
+      <section class="pane on" id="pane-code">
+        <div class="pane-bar">
+          <span class="note" id="codeNote">the code regenerates as you draw</span>
+          <span class="grow"></span>
+          <button class="lnk" data-act="copy">Copy</button>
+          <button class="lnk" data-act="dlpy">Download .py</button>
+        </div>
+        <div class="code" id="code"><p class="quiet">Nothing to generate yet.</p></div>
+      </section>
+
+      <section class="pane" id="pane-run">
+        <div class="pane-bar">
+          <label class="lab" for="stdin">input (one line per Read block)</label>
+          <span class="grow"></span>
+          <button class="btn small" data-act="run" id="runBtn">Run ▸</button>
+        </div>
+        <textarea id="stdin" rows="3" spellcheck="false" placeholder="nothing needed for this chart"></textarea>
+        <pre class="out" id="out"><span class="quiet">Run the code and the output lands here. It executes in a separate Python process with a 5 second limit, so a runaway loop cannot hang the app.</span></pre>
+      </section>
+
+      <section class="pane" id="pane-problems">
+        <div class="imported" id="imported" hidden>
+          <div class="ih">this is the picture we read</div>
+          <img id="importedImg" alt="the uploaded flowchart">
+        </div>
+        <ul class="plist" id="plist"></ul>
+        <div class="notes" id="notes"></div>
+      </section>
+
+      <section class="pane" id="pane-pic">
+        <div class="pane-bar">
+          <span class="note">the same picture the command line renders</span>
+          <span class="grow"></span>
+          <button class="lnk" data-act="dlpng">Download .png</button>
+        </div>
+        <div class="pic" id="pic"><p class="quiet">Add a block and the picture appears here.</p></div>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <span id="counts">0 blocks · 0 arrows</span>
+    <span class="grow"></span>
+    <span id="saved" class="quiet">draft kept in this browser</span>
+  </footer>
+</div>
+
+<!-- the examples sheet ------------------------------------------------------- -->
+<div class="sheet-back" id="examples" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-label="Example charts">
+    <div class="sc-h">
+      <b>Example charts</b>
+      <span class="quiet">the five working ones are the demo; three broken ones show what the checker refuses</span>
+      <button class="x" data-close>×</button>
+    </div>
+    <div class="ex-list" id="exList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

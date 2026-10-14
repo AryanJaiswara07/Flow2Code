@@ -1,0 +1,88 @@
+{
+  "name": "bad_unreachable",
+  "note": "BROKEN on purpose: block p9 is on no path from Start",
+  "stdin": "3\n",
+  "nodes": [
+    {
+      "id": "p1",
+      "type": "start",
+      "text": "Start",
+      "x": 240,
+      "y": 40
+    },
+    {
+      "id": "p2",
+      "type": "input",
+      "text": "Read n",
+      "x": 240,
+      "y": 130
+    },
+    {
+      "id": "p3",
+      "type": "decision",
+      "text": "n > 1?",
+      "x": 240,
+      "y": 235
+    },
+    {
+      "id": "p4",
+      "type": "output",
+      "text": "Print \"big\"",
+      "x": 120,
+      "y": 340
+    },
+    {
+      "id": "p5",
+      "type": "output",
+      "text": "Print \"small\"",
+      "x": 360,
+      "y": 340
+    },
+    {
+      "id": "p9",
+      "type": "process",
+      "text": "x = 1",
+      "x": 600,
+      "y": 130
+    },
+    {
+      "id": "p10",
+      "type": "end",
+      "text": "End",
+      "x": 240,
+      "y": 440
+    }
+  ],
+  "edges": [
+    {
+      "from": "p1",
+      "to": "p2"
+    },
+    {
+      "from": "p2",
+      "to": "p3"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "label": "yes"
+    },
+    {
+      "from": "p3",
+      "to": "p5",
+      "label": "no"
+    },
+    {
+      "from": "p4",
+      "to": "p10"
+    },
+    {
+      "from": "p5",
+      "to": "p10"
+    },
+    {
+      "from": "p9",
+      "to": "p10"
+    }
+  ]
+}

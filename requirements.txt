@@ -1,0 +1,19 @@
+# Flow2Code needs Python 3.10 or newer, and these five packages.
+# Minimum versions are given so pip can find a wheel for YOUR Python; the versions this
+# project was built and tested with are in brackets.
+
+flask>=2.3                 # tested on 3.1.3
+networkx>=3.1          # 3.6.1   the graph the chart becomes: reachability, ancestors, descendants
+Pillow>=10.0           # 12.3.0  draws the chart to a PNG (and reads pixels back in photo mode)
+opencv-python>=4.8     # 4.11.0  threshold, contours, connected components: the shape finder
+numpy>=1.26            # 2.3.5   what OpenCV hands back
+pytest>=8.0            # 9.0.3   the 111 tests; none of them need a screen or a camera
+
+# Optional - only for reading the WORDS inside a photographed block:
+#   pip install pytesseract
+#   then install the Tesseract program itself, which is a separate download:
+#     Windows : https://github.com/UB-Mannheim/tesseract/wiki  (the .exe installer)
+#     Ubuntu  : sudo apt install tesseract-ocr
+#     macOS   : brew install tesseract
+# Without it, photo mode still recovers the blocks, the arrows and the Yes/No sides - and the
+# tool prints a note saying which step it skipped, rather than pretending.

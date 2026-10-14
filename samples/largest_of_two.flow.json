@@ -1,0 +1,88 @@
+{
+  "name": "largest_of_two",
+  "note": "two numbers, one winner, printed with the value",
+  "stdin": "4\n9\n",
+  "nodes": [
+    {
+      "id": "a1",
+      "type": "start",
+      "text": "Start",
+      "x": 260,
+      "y": 40
+    },
+    {
+      "id": "a2",
+      "type": "input",
+      "text": "Read a, b",
+      "x": 260,
+      "y": 130
+    },
+    {
+      "id": "a3",
+      "type": "decision",
+      "text": "a > b?",
+      "x": 260,
+      "y": 235
+    },
+    {
+      "id": "a4",
+      "type": "process",
+      "text": "m = a",
+      "x": 130,
+      "y": 340
+    },
+    {
+      "id": "a5",
+      "type": "process",
+      "text": "m = b",
+      "x": 390,
+      "y": 340
+    },
+    {
+      "id": "a6",
+      "type": "output",
+      "text": "Print \"largest\", m",
+      "x": 260,
+      "y": 435
+    },
+    {
+      "id": "a7",
+      "type": "end",
+      "text": "End",
+      "x": 260,
+      "y": 520
+    }
+  ],
+  "edges": [
+    {
+      "from": "a1",
+      "to": "a2"
+    },
+    {
+      "from": "a2",
+      "to": "a3"
+    },
+    {
+      "from": "a3",
+      "to": "a4",
+      "label": "yes"
+    },
+    {
+      "from": "a3",
+      "to": "a5",
+      "label": "no"
+    },
+    {
+      "from": "a4",
+      "to": "a6"
+    },
+    {
+      "from": "a5",
+      "to": "a6"
+    },
+    {
+      "from": "a6",
+      "to": "a7"
+    }
+  ]
+}

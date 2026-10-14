@@ -1,0 +1,127 @@
+{
+  "name": "calculator",
+  "note": "nested decisions: pick an operator, then compute",
+  "stdin": "8\n2\n*\n",
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "start",
+      "text": "Start",
+      "x": 300,
+      "y": 40
+    },
+    {
+      "id": "c2",
+      "type": "input",
+      "text": "Read a, b",
+      "x": 300,
+      "y": 130
+    },
+    {
+      "id": "c3",
+      "type": "input",
+      "text": "Read op: str",
+      "x": 300,
+      "y": 220
+    },
+    {
+      "id": "c4",
+      "type": "decision",
+      "text": "op == \"+\"?",
+      "x": 300,
+      "y": 320
+    },
+    {
+      "id": "c5",
+      "type": "process",
+      "text": "r = a + b",
+      "x": 150,
+      "y": 425
+    },
+    {
+      "id": "c6",
+      "type": "decision",
+      "text": "op == \"-\"?",
+      "x": 450,
+      "y": 425
+    },
+    {
+      "id": "c7",
+      "type": "process",
+      "text": "r = a - b",
+      "x": 330,
+      "y": 530
+    },
+    {
+      "id": "c8",
+      "type": "process",
+      "text": "r = \"unknown\"",
+      "x": 570,
+      "y": 530
+    },
+    {
+      "id": "c9",
+      "type": "output",
+      "text": "Print r",
+      "x": 350,
+      "y": 630
+    },
+    {
+      "id": "c10",
+      "type": "end",
+      "text": "End",
+      "x": 350,
+      "y": 715
+    }
+  ],
+  "edges": [
+    {
+      "from": "c1",
+      "to": "c2"
+    },
+    {
+      "from": "c2",
+      "to": "c3"
+    },
+    {
+      "from": "c3",
+      "to": "c4"
+    },
+    {
+      "from": "c4",
+      "to": "c5",
+      "label": "yes"
+    },
+    {
+      "from": "c4",
+      "to": "c6",
+      "label": "no"
+    },
+    {
+      "from": "c5",
+      "to": "c9"
+    },
+    {
+      "from": "c6",
+      "to": "c7",
+      "label": "yes"
+    },
+    {
+      "from": "c6",
+      "to": "c8",
+      "label": "no"
+    },
+    {
+      "from": "c7",
+      "to": "c9"
+    },
+    {
+      "from": "c8",
+      "to": "c9"
+    },
+    {
+      "from": "c9",
+      "to": "c10"
+    }
+  ]
+}

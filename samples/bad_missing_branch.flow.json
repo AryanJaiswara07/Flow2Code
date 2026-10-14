@@ -1,0 +1,61 @@
+{
+  "name": "bad_missing_branch",
+  "note": "BROKEN on purpose: the decision has no No branch",
+  "stdin": "",
+  "nodes": [
+    {
+      "id": "b1",
+      "type": "start",
+      "text": "Start",
+      "x": 240,
+      "y": 40
+    },
+    {
+      "id": "b2",
+      "type": "input",
+      "text": "Read n",
+      "x": 240,
+      "y": 130
+    },
+    {
+      "id": "b3",
+      "type": "decision",
+      "text": "n > 0?",
+      "x": 240,
+      "y": 235
+    },
+    {
+      "id": "b4",
+      "type": "output",
+      "text": "Print \"yes it is\"",
+      "x": 240,
+      "y": 340
+    },
+    {
+      "id": "b5",
+      "type": "end",
+      "text": "End",
+      "x": 240,
+      "y": 430
+    }
+  ],
+  "edges": [
+    {
+      "from": "b1",
+      "to": "b2"
+    },
+    {
+      "from": "b2",
+      "to": "b3"
+    },
+    {
+      "from": "b3",
+      "to": "b4",
+      "label": "yes"
+    },
+    {
+      "from": "b4",
+      "to": "b5"
+    }
+  ]
+}

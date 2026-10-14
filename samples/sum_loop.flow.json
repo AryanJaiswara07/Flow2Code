@@ -1,0 +1,110 @@
+{
+  "name": "sum_loop",
+  "note": "a decision with an arrow back into it is a loop: add 1..N",
+  "stdin": "5\n",
+  "nodes": [
+    {
+      "id": "l1",
+      "type": "start",
+      "text": "Start",
+      "x": 250,
+      "y": 40
+    },
+    {
+      "id": "l2",
+      "type": "input",
+      "text": "Read n",
+      "x": 250,
+      "y": 135
+    },
+    {
+      "id": "l3",
+      "type": "process",
+      "text": "i = 1",
+      "x": 250,
+      "y": 230
+    },
+    {
+      "id": "l4",
+      "type": "process",
+      "text": "total = 0",
+      "x": 250,
+      "y": 320
+    },
+    {
+      "id": "l5",
+      "type": "decision",
+      "text": "i <= n?",
+      "x": 250,
+      "y": 430
+    },
+    {
+      "id": "l6",
+      "type": "process",
+      "text": "total = total + i",
+      "x": 90,
+      "y": 545
+    },
+    {
+      "id": "l7",
+      "type": "process",
+      "text": "i = i + 1",
+      "x": 90,
+      "y": 645
+    },
+    {
+      "id": "l8",
+      "type": "output",
+      "text": "Print \"sum is\", total",
+      "x": 420,
+      "y": 545
+    },
+    {
+      "id": "l9",
+      "type": "end",
+      "text": "End",
+      "x": 420,
+      "y": 645
+    }
+  ],
+  "edges": [
+    {
+      "from": "l1",
+      "to": "l2"
+    },
+    {
+      "from": "l2",
+      "to": "l3"
+    },
+    {
+      "from": "l3",
+      "to": "l4"
+    },
+    {
+      "from": "l4",
+      "to": "l5"
+    },
+    {
+      "from": "l5",
+      "to": "l6",
+      "label": "yes"
+    },
+    {
+      "from": "l6",
+      "to": "l7"
+    },
+    {
+      "from": "l7",
+      "to": "l5"
+    },
+    {
+      "from": "l5",
+      "to": "l8",
+      "label": "no"
+    },
+    {
+      "from": "l8",
+      "to": "l9"
+    }
+  ]
+}
